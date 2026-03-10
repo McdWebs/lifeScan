@@ -405,10 +405,10 @@ export default function Settings() {
   const panelTitle = NAV_ITEMS.find((n) => n.id === activeTab)?.label ?? 'Settings';
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
       <h1 className="mb-8 font-display text-2xl font-bold text-neu-fg">Settings</h1>
 
-      <div className="flex gap-6 items-start">
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch sm:items-start w-full">
 
         {/* ── Sidebar nav ── */}
         <nav className="hidden sm:flex flex-col w-44 shrink-0 rounded-[28px] bg-neu-bg shadow-neu-raised p-3 gap-1">
@@ -434,7 +434,7 @@ export default function Settings() {
         </nav>
 
         {/* ── Mobile tab strip ── */}
-        <div className="sm:hidden flex w-full gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <div className="sm:hidden flex w-full flex-wrap gap-2 mb-4">
           {NAV_ITEMS.map(({ id, label, Icon }) => {
             const active = activeTab === id;
             return (
@@ -443,7 +443,7 @@ export default function Settings() {
                 type="button"
                 onClick={() => setActiveTab(id)}
                 className={cn(
-                  'flex items-center gap-2 shrink-0 rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neu-accent',
+                  'flex items-center justify-center gap-2 shrink-0 rounded-2xl px-4 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neu-accent flex-1 min-w-[7rem]',
                   active
                     ? 'text-neu-accent shadow-neu-inset-sm'
                     : 'text-neu-muted shadow-neu-raised-sm hover:text-neu-fg'
@@ -457,7 +457,7 @@ export default function Settings() {
         </div>
 
         {/* ── Content panel ── */}
-        <div className="flex-1 min-w-0 rounded-[28px] bg-neu-bg shadow-neu-raised p-7 sm:p-8">
+        <div className="flex-1 min-w-0 rounded-[28px] bg-neu-bg shadow-neu-raised p-5 sm:p-8">
           <h2 className="mb-6 font-display text-base font-semibold text-neu-fg">{panelTitle}</h2>
 
           {activeTab === 'profile' && (
