@@ -1,0 +1,170 @@
+[
+  {
+    "title": "Add baby to your health insurance",
+    "description": "A new baby is a qualifying life event. You typically have 30 days from the birth to add your child to your plan — don't miss this window or you'll wait until open enrollment.",
+    "category": "Medical",
+    "affiliateCategory": null,
+    "order": 1
+  },
+  {
+    "title": "Choose and schedule a pediatrician",
+    "description": "If you haven't already selected a pediatrician, do so immediately. Your baby will need a checkup within a few days of leaving the hospital, and well-child visits are frequent in the first year.",
+    "category": "Medical",
+    "affiliateCategory": null,
+    "order": 2
+  },
+  {
+    "title": "Understand the newborn screening results",
+    "description": "Your hospital will perform a newborn screening (heel prick test) before discharge. Follow up with your pediatrician to review the results and understand any next steps.",
+    "category": "Medical",
+    "affiliateCategory": null,
+    "order": 3
+  },
+  {
+    "title": "Track the vaccination schedule",
+    "description": "Familiarize yourself with the CDC-recommended immunization schedule. Your pediatrician will guide you, but knowing what's coming helps you plan appointments and watch for reactions.",
+    "category": "Medical",
+    "affiliateCategory": null,
+    "order": 4
+  },
+  {
+    "title": "Apply for a Social Security number",
+    "description": "You can apply at the hospital right after birth. If you didn't, visit your local Social Security office. You'll need this number to claim your child as a dependent and open accounts.",
+    "category": "Legal",
+    "affiliateCategory": null,
+    "order": 5
+  },
+  {
+    "title": "Obtain the birth certificate",
+    "description": "The hospital usually files the paperwork, but confirm it and order certified copies from your county's vital records office. You'll need copies for insurance, passport applications, and more.",
+    "category": "Legal",
+    "affiliateCategory": null,
+    "order": 6
+  },
+  {
+    "title": "Update or create your will",
+    "description": "Name a legal guardian for your child in your will. This is the single most important legal step — without it, a court decides who raises your child if something happens to you.",
+    "category": "Legal",
+    "affiliateCategory": "estate-planning",
+    "order": 7
+  },
+  {
+    "title": "Look into a passport for the baby",
+    "description": "If you have any travel plans, apply for your baby's passport early. Both parents must be present at the appointment, and processing can take weeks.",
+    "category": "Legal",
+    "affiliateCategory": null,
+    "order": 8
+  },
+  {
+    "title": "Open a 529 college savings plan",
+    "description": "The earlier you start, the more time compound growth has to work. Research your state's plan for potential tax benefits, and set up automatic monthly contributions — even small amounts add up.",
+    "category": "Finance",
+    "affiliateCategory": "529-plan",
+    "order": 9
+  },
+  {
+    "title": "Review and increase life insurance",
+    "description": "With a new dependent, make sure your life insurance coverage is sufficient — a common recommendation is 10–12x your annual income. Term life is affordable and straightforward.",
+    "category": "Finance",
+    "affiliateCategory": "life-insurance",
+    "order": 10
+  },
+  {
+    "title": "Update your tax withholdings",
+    "description": "File a new W-4 with your employer to account for the additional dependent. This adjusts your withholding so you're not waiting until tax season to benefit.",
+    "category": "Finance",
+    "affiliateCategory": null,
+    "order": 11
+  },
+  {
+    "title": "Update beneficiaries on all accounts",
+    "description": "Review beneficiary designations on your life insurance, retirement accounts, and bank accounts. Add your child or update allocations to reflect your new family structure.",
+    "category": "Finance",
+    "affiliateCategory": null,
+    "order": 12
+  },
+  {
+    "title": "Understand your parental leave benefits",
+    "description": "Confirm the details of your employer's parental leave policy — duration, pay, and how to file. Check if your state offers additional paid family leave benefits.",
+    "category": "Finance",
+    "affiliateCategory": null,
+    "order": 13
+  },
+  {
+    "title": "Baby-proof your home",
+    "description": "Install outlet covers, cabinet locks, and safety gates. Secure heavy furniture and TVs to the wall. You have some time before baby is mobile, but it arrives faster than you think.",
+    "category": "Safety",
+    "affiliateCategory": "baby-gear",
+    "order": 14
+  },
+  {
+    "title": "Install the car seat correctly",
+    "description": "Have your car seat installation checked by a certified technician. Many fire stations and hospitals offer free inspections. An improperly installed seat dramatically reduces its effectiveness.",
+    "category": "Safety",
+    "affiliateCategory": "baby-gear",
+    "order": 15
+  },
+  {
+    "title": "Set up a safe sleep environment",
+    "description": "Follow the ABCs of safe sleep: Alone, on their Back, in a Crib. Use a firm, flat mattress with a fitted sheet — no bumpers, blankets, pillows, or stuffed animals.",
+    "category": "Safety",
+    "affiliateCategory": "baby-gear",
+    "order": 16
+  },
+  {
+    "title": "Stock up on newborn essentials",
+    "description": "Diapers (newborn and size 1), wipes, onesies, burp cloths, swaddles, bottles (if using), and formula (if using). Having a two-week supply on hand reduces stressful last-minute runs.",
+    "category": "Essentials",
+    "affiliateCategory": "baby-gear",
+    "order": 17
+  },
+  {
+    "title": "Set up a feeding station",
+    "description": "Whether breastfeeding or bottle-feeding, create a comfortable spot with everything you need within arm's reach: water, snacks, burp cloths, phone charger, and a good light source.",
+    "category": "Essentials",
+    "affiliateCategory": null,
+    "order": 18
+  },
+  {
+    "title": "Prepare freezer meals",
+    "description": "Cook and freeze meals before the baby arrives, or use a meal delivery service for the first few weeks. Cooking will be the last thing on your mind during the newborn phase.",
+    "category": "Essentials",
+    "affiliateCategory": "meal-delivery",
+    "order": 19
+  },
+  {
+    "title": "Research and arrange childcare",
+    "description": "Waitlists for quality daycare can be months or even years long. Start researching and visiting options immediately, even if you won't need care for several months.",
+    "category": "Support",
+    "affiliateCategory": null,
+    "order": 20
+  },
+  {
+    "title": "Set up a support system",
+    "description": "Accept help from family and friends. Create a meal train, assign specific tasks when people offer help, and don't hesitate to ask. The first weeks are a team effort.",
+    "category": "Support",
+    "affiliateCategory": null,
+    "order": 21
+  },
+  {
+    "title": "Learn about postpartum mental health",
+    "description": "Postpartum depression and anxiety affect up to 1 in 5 new mothers and many fathers too. Know the signs, talk openly with your partner, and contact your doctor if you're struggling — there's no shame in it.",
+    "category": "Support",
+    "affiliateCategory": null,
+    "order": 22
+  },
+  {
+    "title": "Announce the birth to family and friends",
+    "description": "Share the good news on your terms and timeline. Consider a group message or social post to save energy, and don't feel pressured to respond to every individual reply right away.",
+    "category": "Support",
+    "affiliateCategory": null,
+    "order": 23
+  },
+  {
+    "title": "Set visiting boundaries",
+    "description": "Decide on visiting rules before the baby arrives — who, when, and for how long. It's okay to ask visitors to wash hands, delay visits if you're tired, or limit the number of guests.",
+    "category": "Support",
+    "affiliateCategory": null,
+    "order": 24
+  }
+]

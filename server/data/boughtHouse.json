@@ -1,0 +1,170 @@
+[
+  {
+    "title": "Change all exterior locks",
+    "description": "Replace or rekey all locks on exterior doors. You don't know how many copies of the old keys are floating around from previous owners, agents, or contractors.",
+    "category": "Security",
+    "affiliateCategory": "locksmith",
+    "order": 1
+  },
+  {
+    "title": "Set up a home security system",
+    "description": "Research and install a home security system with door/window sensors, cameras, and monitoring. Many insurers offer a discount for monitored systems.",
+    "category": "Security",
+    "affiliateCategory": "home-security",
+    "order": 2
+  },
+  {
+    "title": "Test all smoke and carbon monoxide detectors",
+    "description": "Check every detector in the house, replace batteries, and add detectors to any rooms that are missing them. Place one on every floor and near bedrooms.",
+    "category": "Security",
+    "affiliateCategory": null,
+    "order": 3
+  },
+  {
+    "title": "Set up electricity and gas",
+    "description": "Transfer or establish electric and gas service in your name. Confirm the switch date so there's no gap in service around your move-in day.",
+    "category": "Utilities",
+    "affiliateCategory": "energy-provider",
+    "order": 4
+  },
+  {
+    "title": "Set up internet and cable",
+    "description": "Research available internet providers at your new address, compare speeds and pricing, and schedule installation. Book early — install appointments can fill up.",
+    "category": "Utilities",
+    "affiliateCategory": "internet-provider",
+    "order": 5
+  },
+  {
+    "title": "Set up water and sewer service",
+    "description": "Contact your municipality to transfer water and sewer into your name. Some areas require an in-person visit or a deposit.",
+    "category": "Utilities",
+    "affiliateCategory": null,
+    "order": 6
+  },
+  {
+    "title": "Set up trash and recycling collection",
+    "description": "Determine whether trash pickup is municipal or private in your area. Register for service and find out your collection days and recycling rules.",
+    "category": "Utilities",
+    "affiliateCategory": null,
+    "order": 7
+  },
+  {
+    "title": "Review and finalize homeowners insurance",
+    "description": "Make sure your homeowners insurance policy is active and covers replacement cost, not just market value. Consider add-ons for flood, earthquake, or sewer backup if relevant to your area.",
+    "category": "Insurance",
+    "affiliateCategory": "home-insurance",
+    "order": 8
+  },
+  {
+    "title": "Get an umbrella insurance policy",
+    "description": "An umbrella policy provides extra liability coverage beyond your home and auto policies. It's inexpensive relative to the protection it offers, especially as a new homeowner.",
+    "category": "Insurance",
+    "affiliateCategory": "home-insurance",
+    "order": 9
+  },
+  {
+    "title": "File for homestead exemption",
+    "description": "If your state or county offers a homestead exemption, file the paperwork to reduce your property tax bill. There's usually a deadline, so check your local assessor's website promptly.",
+    "category": "Finance",
+    "affiliateCategory": null,
+    "order": 10
+  },
+  {
+    "title": "Build a home emergency fund",
+    "description": "Set aside 1–3% of your home's value annually for unexpected repairs. A busted water heater or roof leak won't wait for your next paycheck.",
+    "category": "Finance",
+    "affiliateCategory": "financial-advisor",
+    "order": 11
+  },
+  {
+    "title": "Organize all closing documents",
+    "description": "Store your closing disclosure, deed, title insurance policy, and mortgage documents in a fireproof safe or secure digital backup. You'll need them for taxes and future refinancing.",
+    "category": "Finance",
+    "affiliateCategory": null,
+    "order": 12
+  },
+  {
+    "title": "Understand your mortgage payment schedule",
+    "description": "Set up your mortgage payment method (auto-pay recommended), confirm the due date, and understand how your payment splits between principal, interest, taxes, and insurance.",
+    "category": "Finance",
+    "affiliateCategory": null,
+    "order": 13
+  },
+  {
+    "title": "Locate the main water shut-off valve",
+    "description": "Find and label the main water shut-off valve so you can act fast in a plumbing emergency. Test it to make sure it turns easily.",
+    "category": "Maintenance",
+    "affiliateCategory": null,
+    "order": 14
+  },
+  {
+    "title": "Locate the electrical panel and label circuits",
+    "description": "Find your breaker box and label each circuit so you know which breaker controls which room or appliance. This saves major headaches during an outage or repair.",
+    "category": "Maintenance",
+    "affiliateCategory": null,
+    "order": 15
+  },
+  {
+    "title": "Service the HVAC system",
+    "description": "Schedule an HVAC inspection and tune-up. Replace the air filter and ask about a maintenance plan — regular servicing extends the life of your system significantly.",
+    "category": "Maintenance",
+    "affiliateCategory": "hvac-service",
+    "order": 16
+  },
+  {
+    "title": "Schedule follow-up on inspection items",
+    "description": "Review your home inspection report and address any flagged items that weren't resolved before closing. Prioritize safety concerns and anything that could worsen over time.",
+    "category": "Maintenance",
+    "affiliateCategory": null,
+    "order": 17
+  },
+  {
+    "title": "Deep clean or hire a cleaning service",
+    "description": "Do a thorough deep clean of the entire home before unpacking — it's much easier with empty rooms. Consider a professional service for carpets, ducts, or tough jobs.",
+    "category": "Maintenance",
+    "affiliateCategory": "cleaning-service",
+    "order": 18
+  },
+  {
+    "title": "Update your address everywhere",
+    "description": "File a change of address with USPS, then update your address with your bank, credit cards, employer, DMV, voter registration, insurance providers, subscriptions, and anywhere else on file.",
+    "category": "Admin",
+    "affiliateCategory": null,
+    "order": 19
+  },
+  {
+    "title": "Update your driver's license address",
+    "description": "Most states require you to update your driver's license within 30 days of moving. Check your state's DMV website for the process — some allow online updates.",
+    "category": "Admin",
+    "affiliateCategory": null,
+    "order": 20
+  },
+  {
+    "title": "Register to vote at your new address",
+    "description": "Update your voter registration with your new address to make sure you're assigned to the correct precinct. Many states let you do this online.",
+    "category": "Admin",
+    "affiliateCategory": null,
+    "order": 21
+  },
+  {
+    "title": "Meet your neighbors",
+    "description": "Introduce yourself to immediate neighbors within the first week or two. They're your first line of local knowledge — and the people most likely to watch out for your home.",
+    "category": "Community",
+    "affiliateCategory": null,
+    "order": 22
+  },
+  {
+    "title": "Learn your local services and emergency contacts",
+    "description": "Identify the nearest hospital, urgent care, fire station, and police non-emergency number. Save them in your phone so you're not searching in a crisis.",
+    "category": "Community",
+    "affiliateCategory": null,
+    "order": 23
+  },
+  {
+    "title": "Check for HOA rules and community guidelines",
+    "description": "If your home is in an HOA, read the CC&Rs (covenants, conditions, and restrictions) carefully. Know the rules about landscaping, parking, exterior changes, and dues before you start any projects.",
+    "category": "Community",
+    "affiliateCategory": null,
+    "order": 24
+  }
+]

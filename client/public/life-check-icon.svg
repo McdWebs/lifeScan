@@ -1,0 +1,31 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- On-brand colors from Tailwind theme -->
+    <!-- neu-bg: #E0E5EC, neu-accent: #6C63FF, neu-accent-light: #8B84FF -->
+  </defs>
+
+  <!-- Simple neu surface background so it blends into the app navbar -->
+  <rect x="32" y="32" width="448" height="448" rx="112" fill="#E0E5EC" />
+
+  <!-- Purple calendar icon -->
+  <g transform="translate(112,120)">
+    <!-- Calendar body in brand accent -->
+    <rect x="32" y="64" width="256" height="224" rx="32" fill="#6C63FF" />
+    <!-- Slight lighter top bar -->
+    <rect x="32" y="64" width="256" height="60" rx="28" fill="#8B84FF" />
+    <!-- Rings -->
+    <rect x="78" y="40" width="28" height="40" rx="10" fill="#E0E5EC"/>
+    <rect x="214" y="40" width="28" height="40" rx="10" fill="#E0E5EC"/>
+    <!-- Checklist lines -->
+    <line x1="80" y1="152" x2="236" y2="152" stroke="#F9FAFB" stroke-width="10" stroke-linecap="round"/>
+    <line x1="80" y1="192" x2="220" y2="192" stroke="#F9FAFB" stroke-width="10" stroke-linecap="round"/>
+    <line x1="80" y1="232" x2="204" y2="232" stroke="#F9FAFB" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <!-- Check badge kept simple and clear -->
+  <g transform="translate(256,280)">
+    <circle cx="96" cy="96" r="76" fill="#E0E5EC" />
+    <circle cx="96" cy="96" r="64" fill="#22C55E"/>
+    <path d="M66 100 L88 122 L132 78" fill="none" stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
