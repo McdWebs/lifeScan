@@ -4,6 +4,7 @@ export default function Login() {
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/home';
+  const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4">
@@ -14,7 +15,7 @@ export default function Login() {
 
         <div className="rounded-[32px] bg-neu-bg p-8 shadow-neu-raised">
           <a
-            href={`/api/auth/google?redirect=${encodeURIComponent(from)}`}
+            href={`${apiBase}/auth/google?redirect=${encodeURIComponent(from)}`}
             className="btn-primary flex w-full items-center justify-center gap-2 py-3.5 text-sm"
           >
             <svg

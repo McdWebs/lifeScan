@@ -12,6 +12,7 @@ import checklistRoutes from './routes/checklist.js';
 import historyRoutes from './routes/history.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
+import feedbackRoutes from './routes/feedback.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,6 +24,7 @@ app.use('/api/checklist', checklistRoutes);
 app.use('/api/history', historyRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 connectDB().then(() => {
   const server = app.listen(PORT, () => {
