@@ -1,6 +1,8 @@
 import { useState, useCallback, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+
 export default function useChecklist() {
   const { token } = useAuth();
   const [checklist, setChecklist] = useState(null);
@@ -29,7 +31,7 @@ export default function useChecklist() {
 
       function poll() {
         attempts++;
-        fetch(`/api/checklist/${id}/personalized`, {
+        fetch(`${API_BASE}/checklist/${id}/personalized`, {
           headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => res.json())
@@ -67,7 +69,7 @@ export default function useChecklist() {
       setError(null);
       stopPolling();
       try {
-        const res = await fetch("/api/checklist", {
+        const res = await fetch(`${API_BASE}/checklist`, {
           method: "POST",
           headers: authHeaders(),
           body: JSON.stringify({ eventType, answers, sessionId }),
@@ -94,7 +96,7 @@ export default function useChecklist() {
       setError(null);
       stopPolling();
       try {
-        const res = await fetch("/api/checklist/custom", {
+        const res = await fetch(`${API_BASE}/checklist/custom`, {
           method: "POST",
           headers: authHeaders(),
           body: JSON.stringify({ eventDescription, sessionId, eventName, iconKey }),
@@ -122,7 +124,7 @@ export default function useChecklist() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`/api/checklist/${id}`, {
+        const res = await fetch(`${API_BASE}/checklist/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error("Failed to fetch checklist");
@@ -153,7 +155,7 @@ export default function useChecklist() {
       });
 
       try {
-        const res = await fetch(`/api/checklist/${checklistId}/tasks`, {
+        const res = await fetch(`${API_BASE}/checklist/${checklistId}/tasks`, {
           method: "PATCH",
           headers: authHeaders(),
           body: JSON.stringify({ taskIndex, completed }),
@@ -184,7 +186,7 @@ export default function useChecklist() {
   const addTask = useCallback(
     async (checklistId, title, category) => {
       try {
-        const res = await fetch(`/api/checklist/${checklistId}/tasks`, {
+        const res = await fetch(`${API_BASE}/checklist/${checklistId}/tasks`, {
           method: "POST",
           headers: authHeaders(),
           body: JSON.stringify({ title, category }),
@@ -206,7 +208,7 @@ export default function useChecklist() {
     async (id) => {
       setHistory((prev) => prev.filter((item) => item._id !== id));
       try {
-        const res = await fetch(`/api/checklist/${id}`, {
+        const res = await fetch(`${API_BASE}/checklist/${id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -225,7 +227,7 @@ export default function useChecklist() {
       setError(null);
       try {
         const res = await fetch(
-          `/api/history?sessionId=${encodeURIComponent(sessionId)}`,
+          `${API_BASE}/history?sessionId=${encodeURIComponent(sessionId)}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (!res.ok) throw new Error("Failed to fetch history");

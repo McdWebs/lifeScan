@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -57,7 +58,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function login(email, password) {
-    const res = await fetch("/api/auth/login", {
+    const res = await fetch(`${API_BASE}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -75,7 +76,7 @@ export function AuthProvider({ children }) {
   }
 
   async function register(email, password) {
-    const res = await fetch("/api/auth/register", {
+    const res = await fetch(`${API_BASE}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
