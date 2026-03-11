@@ -25,10 +25,28 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet());
 
 // Restrict CORS in production; fall back to permissive in local dev
-const allowedOrigin = process.env.FRONTEND_ORIGIN || '*';
+// Normalize the configured origin so trailing slashes don't break equality checks
+const allowedOrigin =
+  (process.env.FRONTEND_ORIGIN && process.env.FRONTEND_ORIGIN.replace(/\/$/, '')) ||
+  '*';
+
 app.use(
   cors({
-    origin: allowedOrigin,
+    // Use a function so we can safely compare normalized origins and
+    // reflect the actual request origin in the CORS header.
+    origin(origin, callback) {
+      // Allow non-browser / same-origin requests with no Origin header
+      if (!origin) return callback(null, true);
+
+      const normalizedOrigin = origin.replace(/\/$/, '');
+
+      if (allowedOrigin === '*' || normalizedOrigin === allowedOrigin) {
+        // `true` tells `cors` to reflect the request origin
+        return callback(null, true);
+      }
+
+      return callback(new Error('Not allowed by CORS'));
+    },
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
