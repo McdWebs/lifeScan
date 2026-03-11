@@ -50,11 +50,12 @@ router.post('/', async (req, res) => {
 router.post('/custom', async (req, res) => {
   try {
     const { eventDescription, sessionId, eventName, iconKey } = req.body;
-    if (!eventDescription?.trim()) {
-      return res.status(400).json({ error: 'eventDescription is required' });
+    const trimmed = eventDescription?.trim();
+    if (!trimmed || trimmed.length < 20 || !trimmed.includes(' ')) {
+      return res.status(400).json({ error: 'Please provide a short sentence describing your situation (at least ~20 characters).' });
     }
 
-    const { eventTitle, tasks } = await generateCustomChecklist(eventDescription.trim());
+    const { eventTitle, tasks } = await generateCustomChecklist(trimmed);
 
     // User-supplied name takes priority over AI-generated title
     const finalTitle = eventName?.trim() || eventTitle;
@@ -64,7 +65,7 @@ router.post('/custom', async (req, res) => {
       userId: req.userId || null,
       eventType: 'custom',
       answers: {
-        eventDescription: eventDescription.trim(),
+        eventDescription: trimmed,
         eventTitle: finalTitle,
         iconKey: iconKey || 'pencil',
       },

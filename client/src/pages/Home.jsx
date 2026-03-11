@@ -181,8 +181,10 @@ function CustomEventCard({ onGenerate, loading }) {
   function handleSubmit(e) {
     e.preventDefault();
     const trimmed = description.trim();
-    if (!trimmed || trimmed.length < 5) {
-      setInputError('Please describe your event (at least a few words).');
+    const hasSpace = trimmed.includes(' ');
+    const isLongEnough = trimmed.length >= 20;
+    if (!trimmed || !hasSpace || !isLongEnough) {
+      setInputError('Please describe your event in a full sentence (at least ~20 characters).');
       return;
     }
     setInputError('');
