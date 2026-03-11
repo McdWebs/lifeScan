@@ -11,6 +11,7 @@ import Checklist from './pages/Checklist'
 import ChecklistDetail from './pages/ChecklistDetail'
 import History from './pages/History'
 import Settings from './pages/Settings'
+import AdminAnalytics from './pages/AdminAnalytics'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import About from './pages/About'
@@ -53,6 +54,7 @@ export default function App() {
             <Route path="/checklist/:id" element={<ProtectedRoute><ChecklistDetail /></ProtectedRoute>} />
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

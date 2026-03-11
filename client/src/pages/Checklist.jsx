@@ -7,6 +7,8 @@ import Loader from '../components/ui/Loader';
 import ChecklistItem from '../components/ChecklistItem';
 import AddTaskForm from '../components/AddTaskForm';
 import affiliateLinks from '../lib/affiliateLinks';
+import { useAuth } from '../context/AuthContext';
+import { track } from '../utils/analytics';
 
 const eventMeta = {
   boughtHouse: { name: 'Bought a House',     category: 'Real Estate'   },
@@ -20,6 +22,7 @@ export default function Checklist() {
   const location  = useLocation();
   const navigate  = useNavigate();
   const sessionId = useSession();
+  const { token } = useAuth();
   const {
     checklist,
     loading,
@@ -42,8 +45,11 @@ export default function Checklist() {
     if (generatedRef.current) return;
     generatedRef.current = true;
     generateChecklist(state.eventType, state.answers, sessionId);
+    if (token) {
+      track('page_view', { page: 'checklist', eventType: state.eventType, sessionId }, { token });
+    }
     return () => stopPolling();
-  }, []);
+  }, [state, navigate, generateChecklist, sessionId, stopPolling, token]);
 
   const tasks     = checklist?.tasks ?? [];
   const completed = tasks.filter((t) => t.completed).length;

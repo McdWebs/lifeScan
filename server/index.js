@@ -13,6 +13,7 @@ import historyRoutes from './routes/history.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import feedbackRoutes from './routes/feedback.js';
+import analyticsRoutes from './routes/analytics.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,6 +26,7 @@ app.use('/api/history', historyRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 connectDB().then(() => {
   const server = app.listen(PORT, () => {

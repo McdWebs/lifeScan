@@ -6,6 +6,8 @@ import Loader from '../components/ui/Loader';
 import ChecklistItem from '../components/ChecklistItem';
 import AddTaskForm from '../components/AddTaskForm';
 import affiliateLinks from '../lib/affiliateLinks';
+import { useAuth } from '../context/AuthContext';
+import { track } from '../utils/analytics';
 
 const eventMeta = {
   boughtHouse: { name: 'Bought a House',     category: 'Real Estate'   },
@@ -107,8 +109,14 @@ export default function ChecklistDetail() {
   const location   = useLocation();
   const { checklist, loading, error, fetchChecklist, toggleTask, addTask } = useChecklist();
   const celebratedRef = useRef(false);
+  const { token } = useAuth();
 
-  useEffect(() => { fetchChecklist(id); }, [id]);
+  useEffect(() => {
+    fetchChecklist(id);
+    if (token) {
+      track('page_view', { page: 'checklist_detail', checklistId: id }, { token });
+    }
+  }, [id, fetchChecklist, token]);
 
   const tasks     = checklist?.tasks ?? [];
   const completed = tasks.filter((t) => t.completed).length;

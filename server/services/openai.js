@@ -1,4 +1,17 @@
 import OpenAI from 'openai';
+import AnalyticsEvent from '../models/AnalyticsEvent.js';
+
+async function logOpenAIEvent(eventName, properties = {}) {
+  try {
+    await AnalyticsEvent.create({
+      eventName,
+      source: 'server',
+      properties,
+    });
+  } catch {
+    // Never let analytics logging break checklist generation
+  }
+}
 
 // Keys that map to affiliate links defined in client/src/lib/affiliateLinks.js
 const AFFILIATE_KEYS = [
@@ -60,6 +73,10 @@ Each task object: { "title": string, "description": string, "category": string, 
     clearTimeout(timeout);
     const parsed = JSON.parse(response.choices[0].message.content);
 
+    logOpenAIEvent('openai_generate_custom_success', {
+      model: 'gpt-4o-mini',
+    });
+
     // Sanitize: strip any affiliateCategory value the AI invented that isn't in our known list
     const tasks = (parsed.tasks || []).map((task) => ({
       ...task,
@@ -73,6 +90,9 @@ Each task object: { "title": string, "description": string, "category": string, 
   } catch (error) {
     clearTimeout(timeout);
     console.error('OpenAI custom checklist generation failed:', error.message);
+    logOpenAIEvent('openai_generate_custom_error', {
+      message: error.message,
+    });
     throw error;
   }
 }
@@ -111,9 +131,19 @@ Return a JSON object with a single key "tasks" containing the personalized array
     clearTimeout(timeout);
 
     const parsed = JSON.parse(response.choices[0].message.content);
+
+    logOpenAIEvent('openai_personalize_success', {
+      model: 'gpt-4o-mini',
+      eventType,
+    });
+
     return parsed.tasks;
   } catch (error) {
     console.error('OpenAI personalization failed, using base tasks:', error.message);
+    logOpenAIEvent('openai_personalize_error', {
+      message: error.message,
+      eventType,
+    });
     return baseTasks;
   }
 }

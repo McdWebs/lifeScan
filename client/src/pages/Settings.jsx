@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
+import { track } from '../utils/analytics';
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
@@ -145,6 +146,13 @@ function ProfilePanel({ user, token, updateUser }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to update profile');
       updateUser(data);
+      track(
+        'profile_updated',
+        {
+          userId: data.id,
+        },
+        { token }
+      );
       setStatus({ type: 'success', msg: 'Name saved.' });
     } catch (err) {
       setStatus({ type: 'error', msg: err.message });
@@ -377,6 +385,12 @@ export default function Settings() {
   const { user, token, logout, updateUser } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [logoutStep, setLogoutStep] = useState('idle');
+
+  useEffect(() => {
+    if (token) {
+      track('page_view', { page: 'settings' }, { token });
+    }
+  }, [token]);
 
   function handleLogout() {
     logout();

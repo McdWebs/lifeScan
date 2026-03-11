@@ -1,7 +1,9 @@
 import { useState, useCallback, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
+import { track } from "../utils/analytics";
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+// Default to '/api' so it proxies correctly to the backend in dev
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
 
 export default function useChecklist() {
   const { token } = useAuth();
@@ -77,6 +79,15 @@ export default function useChecklist() {
         if (!res.ok) throw new Error("Failed to generate checklist");
         const data = await res.json();
         setChecklist(data);
+        track(
+          "checklist_generated",
+          {
+            checklistId: data._id,
+            eventType,
+            taskCount: data.tasks?.length ?? 0,
+          },
+          { token }
+        );
         pollForPersonalization(data._id, data.tasks);
         return data;
       } catch (err) {
@@ -107,6 +118,25 @@ export default function useChecklist() {
         }
         const data = await res.json();
         setChecklist(data);
+        // For funnel, treat custom and preset the same at the "checklist_generated" step
+        track(
+          "checklist_generated",
+          {
+            checklistId: data._id,
+            eventType: "custom",
+            taskCount: data.tasks?.length ?? 0,
+          },
+          { token }
+        );
+        track(
+          "checklist_generated_custom",
+          {
+            checklistId: data._id,
+            eventName,
+            taskCount: data.tasks?.length ?? 0,
+          },
+          { token }
+        );
         return data;
       } catch (err) {
         setError(err.message);
@@ -163,6 +193,29 @@ export default function useChecklist() {
         if (!res.ok) throw new Error("Failed to update task");
         const data = await res.json();
         setChecklist(data);
+        const completedCount = data.tasks?.filter((t) => t.completed).length ?? 0;
+        // If this is the first completed task on this checklist, emit a milestone event
+        if (completed && completedCount === 1) {
+          track(
+            "tasks_completed_first_time",
+            {
+              checklistId,
+              totalTasks: data.tasks?.length ?? 0,
+            },
+            { token }
+          );
+        }
+        track(
+          "checklist_task_toggled",
+          {
+            checklistId,
+            taskIndex,
+            completed,
+            completedCount,
+            totalTasks: data.tasks?.length ?? 0,
+          },
+          { token }
+        );
         return data;
       } catch (err) {
         setChecklist((prev) => {

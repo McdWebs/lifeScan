@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { track } from "../utils/analytics";
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 const AuthContext = createContext(null);
@@ -14,7 +15,8 @@ export function AuthProvider({ children }) {
     if (savedToken && savedUser) {
       setToken(savedToken);
       try {
-        setUser(JSON.parse(savedUser));
+        const parsed = JSON.parse(savedUser);
+        setUser(parsed);
       } catch {
         localStorage.removeItem("user");
       }
@@ -40,6 +42,8 @@ export function AuthProvider({ children }) {
       localStorage.setItem("user", JSON.stringify(newUser));
       setToken(urlToken);
       setUser(newUser);
+      track("signed_in", { method: "google", userId: newUser.id }, { token: urlToken });
+      track("login_success", { method: "google", userId: newUser.id }, { token: urlToken });
 
       // Clean auth parameters from URL
       params.delete("token");
@@ -72,6 +76,8 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(data.user));
     setToken(data.token);
     setUser(data.user);
+    track("signed_in", { method: "password", userId: data.user.id }, { token: data.token });
+    track("login_success", { method: "password", userId: data.user.id }, { token: data.token });
     return data;
   }
 
@@ -90,6 +96,8 @@ export function AuthProvider({ children }) {
     localStorage.setItem("user", JSON.stringify(data.user));
     setToken(data.token);
     setUser(data.user);
+    track("signed_in", { method: "password", userId: data.user.id }, { token: data.token });
+    track("register_success", { userId: data.user.id }, { token: data.token });
     return data;
   }
 
@@ -98,6 +106,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("user");
     setToken(null);
     setUser(null);
+    track("logout", {});
   }
 
   function updateUser(newUser, newToken) {

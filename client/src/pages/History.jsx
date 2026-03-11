@@ -5,6 +5,8 @@ import useChecklist from '../hooks/useChecklist';
 import ProgressRing from '../components/ProgressRing';
 import Loader from '../components/ui/Loader';
 import { cn } from '../lib/utils';
+import { useAuth } from '../context/AuthContext';
+import { track } from '../utils/analytics';
 
 const eventMeta = {
   boughtHouse: { title: 'Bought a House',     Icon: HouseIcon     },
@@ -88,12 +90,16 @@ export default function History() {
   const navigate  = useNavigate();
   const sessionId = useSession();
   const { history, loading, fetchHistory, deleteChecklist } = useChecklist();
+  const { token } = useAuth();
   const [confirmId, setConfirmId] = useState(null);
   const [deleting,  setDeleting]  = useState(null);
 
   useEffect(() => {
     fetchHistory(sessionId);
-  }, []);
+    if (token) {
+      track('page_view', { page: 'history', sessionId }, { token });
+    }
+  }, [sessionId, fetchHistory, token]);
 
   async function handleDelete(e, id) {
     e.stopPropagation();

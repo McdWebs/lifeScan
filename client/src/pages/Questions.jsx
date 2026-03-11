@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import questions from '../lib/questions';
 import { cn } from '../lib/utils';
+import { useAuth } from '../context/AuthContext';
+import { track } from '../utils/analytics';
 
 export default function Questions() {
   const { eventType } = useParams();
   const navigate = useNavigate();
+  const { token } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [direction, setDirection] = useState('forward');
@@ -14,7 +17,10 @@ export default function Questions() {
 
   useEffect(() => {
     if (!eventQuestions) navigate('/', { replace: true });
-  }, [eventQuestions, navigate]);
+    if (eventQuestions && token) {
+      track('page_view', { page: 'questions', eventType }, { token });
+    }
+  }, [eventQuestions, navigate, eventType, token]);
 
   if (!eventQuestions) return null;
 

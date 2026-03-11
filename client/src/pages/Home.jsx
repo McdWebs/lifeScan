@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import EventCard from '../components/EventCard';
 import useChecklist from '../hooks/useChecklist';
 import useSession from '../hooks/useSession';
 import { useAuth } from '../context/AuthContext';
+import { track } from '../utils/analytics';
 
 // ── SVG icon components ───────────────────────────────────────────────────────
 
@@ -296,17 +297,26 @@ function CustomEventCard({ onGenerate, loading }) {
 export default function Home() {
   const navigate = useNavigate();
   const sessionId = useSession();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const { generateCustomChecklist, loading: customLoading } = useChecklist();
   const [customError, setCustomError] = useState('');
 
   const greeting = getGreeting();
   const firstName = getFirstName(user);
 
+  useEffect(() => {
+    if (token) {
+      track('page_view', { page: 'home', sessionId }, { token });
+      // Funnel step: home_seen, after successful sign-in
+      track('home_seen', { sessionId }, { token });
+    }
+  }, [sessionId, token]);
+
   async function handleCustomGenerate(description, name, iconKey) {
     setCustomError('');
     try {
       const data = await generateCustomChecklist(description, sessionId, name, iconKey);
+      track('custom_checklist_flow_completed', { checklistId: data._id }, {});
       navigate(`/checklist/${data._id}`);
     } catch (err) {
       setCustomError(err.message || 'Something went wrong. Please try again.');
