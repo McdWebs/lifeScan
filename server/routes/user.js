@@ -1,19 +1,51 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import User from '../models/User.js';
 import Checklist from '../models/Checklist.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = Router();
+
+// ─── Rate limiting for sensitive user actions ─────────────────────────────────
+
+const sensitiveUserLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later.' },
+});
 router.use(authMiddleware);
 
 // GET /api/user/me — return current profile
 router.get('/me', async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password -tokenVersion');
+    const user = await User.findById(req.userId).select('-password');
     if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json({ id: user._id, name: user.name, email: user.email });
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const lastReset = user.customAiUsageLastReset
+      ? new Date(user.customAiUsageLastReset)
+      : null;
+
+    if (!lastReset || lastReset < today) {
+      user.customAiUsageCount = 0;
+      user.customAiUsageLastReset = today;
+      await user.save();
+    }
+
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      customAiUsage: {
+        used: user.customAiUsageCount,
+        dailyLimit: 3,
+      },
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -36,7 +68,7 @@ router.patch('/profile', async (req, res) => {
 });
 
 // PATCH /api/user/password — change password
-router.patch('/password', async (req, res) => {
+router.patch('/password', sensitiveUserLimiter, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     if (!currentPassword || !newPassword) {
@@ -69,7 +101,7 @@ router.patch('/password', async (req, res) => {
 });
 
 // POST /api/user/invalidate-sessions — sign out all other devices
-router.post('/invalidate-sessions', async (req, res) => {
+router.post('/invalidate-sessions', sensitiveUserLimiter, async (req, res) => {
   try {
     const { currentPassword } = req.body;
     if (!currentPassword) {
@@ -132,7 +164,7 @@ router.get('/export', async (req, res) => {
 });
 
 // DELETE /api/user/account — permanently delete account and all data
-router.delete('/account', async (req, res) => {
+router.delete('/account', sensitiveUserLimiter, async (req, res) => {
   try {
     const { currentPassword } = req.body;
     if (!currentPassword) {

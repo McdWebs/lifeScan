@@ -167,7 +167,7 @@ function getFirstName(user) {
 
 // ── Custom event card ─────────────────────────────────────────────────────────
 
-function CustomEventCard({ onGenerate, loading }) {
+function CustomEventCard({ onGenerate, loading, remaining, dailyLimit }) {
   const [name, setName]               = useState('');
   const [iconKey, setIconKey]         = useState('pencil');
   const [pickerOpen, setPickerOpen]   = useState(false);
@@ -272,7 +272,7 @@ function CustomEventCard({ onGenerate, loading }) {
           <div className="flex items-center gap-2">
             <button
               type="submit"
-              disabled={loading || !description.trim()}
+              disabled={loading || !description.trim() || remaining === 0}
               className="btn-primary flex items-center gap-1.5 px-4 py-2 text-xs disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
             >
               {loading ? (
@@ -287,7 +287,13 @@ function CustomEventCard({ onGenerate, loading }) {
                 </>
               )}
             </button>
-            {!loading && <p className="text-[11px] text-neu-muted">~5–10 sec</p>}
+            {!loading && (
+              <p className="text-[11px] text-neu-muted">
+                {remaining !== null && remaining !== undefined
+                  ? `${remaining}/${dailyLimit} AI custom checklists left today`
+                  : '~5–10 sec'}
+              </p>
+            )}
           </div>
       </form>
     </div>
@@ -302,6 +308,9 @@ export default function Home() {
   const { user, token } = useAuth();
   const { generateCustomChecklist, loading: customLoading } = useChecklist();
   const [customError, setCustomError] = useState('');
+  const dailyLimit = user?.customAiUsage?.dailyLimit ?? 3;
+  const used = user?.customAiUsage?.used ?? 0;
+  const remaining = Math.max(dailyLimit - used, 0);
 
   const greeting = getGreeting();
   const firstName = getFirstName(user);
@@ -358,7 +367,12 @@ export default function Home() {
         </div>
 
         <div className="w-full">
-          <CustomEventCard onGenerate={handleCustomGenerate} loading={customLoading} />
+          <CustomEventCard
+            onGenerate={handleCustomGenerate}
+            loading={customLoading}
+            remaining={token ? remaining : null}
+            dailyLimit={dailyLimit}
+          />
         </div>
 
         {customError && (

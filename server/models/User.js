@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    customAiUsageCount: {
+      type: Number,
+      default: 0,
+    },
+    customAiUsageLastReset: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );

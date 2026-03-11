@@ -61,6 +61,32 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
+  // Fetch server-side user profile (including custom AI usage) once we have a token
+  useEffect(() => {
+    async function fetchProfile() {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${API_BASE}/user/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          throw new Error("Failed to load profile");
+        }
+        const data = await res.json();
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser(data);
+      } catch {
+        // If profile fails, keep existing user object
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProfile();
+  }, [token]);
+
   async function login(email, password) {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: "POST",

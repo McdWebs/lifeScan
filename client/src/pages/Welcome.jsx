@@ -214,7 +214,7 @@ export default function Welcome() {
             >
               <span className="h-1.5 w-1.5 rounded-full bg-neu-accent animate-pulse" />
               <span className="text-xs font-semibold uppercase tracking-widest text-neu-accent">
-                AI-powered · Personalised for you
+                Personalised for you
               </span>
             </div>
 
@@ -242,30 +242,6 @@ export default function Welcome() {
               overwhelm into a clear, personalised checklist so nothing slips
               through the cracks.
             </p>
-
-            {/* Steps strip */}
-            <div
-              className="mt-11 flex flex-col gap-3 sm:flex-row sm:gap-0 sm:items-stretch rounded-2xl sm:rounded-2xl sm:bg-neu-bg sm:shadow-neu-inset-sm sm:overflow-hidden lg:max-w-[480px] animate-fade-up"
-              style={{ animationDelay: '0.42s' }}
-            >
-              {steps.map((step, i) => (
-                <div
-                  key={i}
-                  className="flex sm:flex-col sm:flex-1 items-center sm:items-start gap-3 sm:gap-2 rounded-2xl bg-neu-bg shadow-neu-inset-sm sm:shadow-none sm:rounded-none px-4 py-3 sm:px-5 sm:py-4"
-                >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-neu-bg shadow-neu-raised-sm text-xs font-extrabold text-neu-accent">
-                    {step.num}
-                  </span>
-                  <div className="text-left">
-                    <p className="text-xs font-bold text-neu-fg leading-tight">{step.title}</p>
-                    <p className="mt-0.5 text-[11px] text-neu-muted leading-snug hidden sm:block">{step.desc}</p>
-                  </div>
-                  {i < steps.length - 1 && (
-                    <ArrowRightIcon className="hidden sm:block ml-auto h-3.5 w-3.5 shrink-0 text-neu-muted opacity-40 self-center" />
-                  )}
-                </div>
-              ))}
-            </div>
 
             {/* CTA */}
             <div

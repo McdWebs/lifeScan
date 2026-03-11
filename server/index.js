@@ -7,6 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import connectDB from './db.js';
 import checklistRoutes from './routes/checklist.js';
 import historyRoutes from './routes/history.js';
@@ -18,7 +19,21 @@ import analyticsRoutes from './routes/analytics.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+// ─── Global security middleware ────────────────────────────────────────────────
+
+// Standard HTTP security headers (X-Frame-Options, X-Content-Type-Options, etc.)
+app.use(helmet());
+
+// Restrict CORS in production; fall back to permissive in local dev
+const allowedOrigin = process.env.FRONTEND_ORIGIN || '*';
+app.use(
+  cors({
+    origin: allowedOrigin,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
 app.use(express.json());
 
 app.use('/api/checklist', checklistRoutes);

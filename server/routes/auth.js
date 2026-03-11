@@ -1,10 +1,21 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import { OAuth2Client } from 'google-auth-library';
 import User from '../models/User.js';
 
 const router = Router();
+
+// ─── Rate limiting for auth endpoints ─────────────────────────────────────────
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // max requests per IP per window for auth endpoints
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many authentication attempts, please try again later.' },
+});
 
 const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -12,9 +23,19 @@ const googleClient = new OAuth2Client(
   process.env.GOOGLE_REDIRECT_URI
 );
 
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, async (req, res) => {
   try {
     const { name, email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    if (password.length < 8) {
+      return res
+        .status(400)
+        .json({ error: 'Password must be at least 8 characters long' });
+    }
 
     const existing = await User.findOne({ email: email.toLowerCase() });
     if (existing) {
@@ -39,9 +60,13 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
 
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {

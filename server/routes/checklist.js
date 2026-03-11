@@ -3,6 +3,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Checklist from '../models/Checklist.js';
+import User from '../models/User.js';
 import { personalizeChecklist, generateCustomChecklist } from '../services/openai.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 
@@ -50,6 +51,37 @@ router.post('/', async (req, res) => {
 router.post('/custom', async (req, res) => {
   try {
     const { eventDescription, sessionId, eventName, iconKey } = req.body;
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(403).json({ error: 'Sign in is required to use custom AI checklists.' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const lastReset = user.customAiUsageLastReset
+      ? new Date(user.customAiUsageLastReset)
+      : null;
+
+    if (!lastReset || lastReset < today) {
+      user.customAiUsageCount = 0;
+      user.customAiUsageLastReset = today;
+    }
+
+    const DAILY_LIMIT = 3;
+    if (user.customAiUsageCount >= DAILY_LIMIT) {
+      return res.status(429).json({
+        error: 'Daily limit reached for custom AI checklists. Please try again tomorrow.',
+        dailyLimit: DAILY_LIMIT,
+        used: user.customAiUsageCount,
+      });
+    }
     const trimmed = eventDescription?.trim();
     if (!trimmed || trimmed.length < 20 || !trimmed.includes(' ')) {
       return res.status(400).json({ error: 'Please provide a short sentence describing your situation (at least ~20 characters).' });
@@ -62,7 +94,7 @@ router.post('/custom', async (req, res) => {
 
     const checklist = await Checklist.create({
       sessionId,
-      userId: req.userId || null,
+      userId,
       eventType: 'custom',
       answers: {
         eventDescription: trimmed,
@@ -71,6 +103,9 @@ router.post('/custom', async (req, res) => {
       },
       tasks,
     });
+
+    user.customAiUsageCount += 1;
+    await user.save();
 
     res.status(201).json(checklist);
   } catch (error) {
